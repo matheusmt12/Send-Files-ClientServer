@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.DatagramSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
@@ -13,15 +14,20 @@ public class Client {
 		try {
 			//Abrir conexao com cliente 
 			
-			System.out.println("conecceting");
-			Socket clienSocket = new Socket("localhost", 8000);
+			System.out.println("conecceting server");
+			Socket clientSocket = new Socket("localhost", 8000);
 			System.out.println("coneccted");
-			DataOutputStream fileSocket = new DataOutputStream(clienSocket.getOutputStream());
-			fileSocket.writeBytes("teste.txt" + "\n");
+			DataOutputStream fileSocket = new DataOutputStream(clientSocket.getOutputStream());
+			System.out.println("Informe o nome do arquivo");
+			Scanner s = new Scanner(System.in);
+			String nameFile  = s.nextLine();
+			fileSocket.writeBytes(nameFile+".html" + "\n");
+			
+			clientSocket.setSoTimeout(3000);
 
 			FileOutputStream outSocket = new FileOutputStream("./Receive_files/receive.txt");
 
-			InputStream inputStream = clienSocket.getInputStream();
+			InputStream inputStream = clientSocket.getInputStream();
 			byte[] cbuffer = new byte[1024];
 			int byteRead;
 
@@ -30,7 +36,7 @@ public class Client {
 			}
 
 			outSocket.close();
-			clienSocket.close();
+			clientSocket.close();
 			System.out.println("fineshed");
 		
 
