@@ -23,7 +23,7 @@ public class Client {
 			String nameFile  = s.nextLine();
 			fileSocket.writeBytes(nameFile+".html" + "\n");
 			
-			clientSocket.setSoTimeout(3000);
+			clientSocket.setSoTimeout(60000);
 
 			FileOutputStream outSocket = new FileOutputStream("./Receive_files/receive.txt");
 
